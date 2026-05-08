@@ -49,3 +49,33 @@ This repository contains the progress for **Week 1** of the Python Web Developme
 │   └── site.db
 ├── app.py
 └── README.md
+
+# 📝 Blogging Platform - Week 2: User Authentication & Database
+
+## 📌 Project Overview
+This week focused on transitioning the static Flask application into a dynamic platform with a secure database backend and user session management.
+
+## 🛠️ Key Features Implemented
+* **User Authentication**: Integrated **Flask-Login** to handle user sessions, allowing for secure login, logout, and protected routes.
+* **Security**: Utilized **Flask-Bcrypt** for industry-standard password hashing.
+* **Database Management**: Established an **SQLAlchemy** (SQLite) database with a relational schema:
+    * **User Model**: Handles user credentials and profile information.
+    * **Post Model**: Stores blog content with a 1-to-many relationship to the User.
+* **Forms & Validation**: Implemented **Flask-WTF** for robust registration and login forms with real-time validation.
+* **Dynamic Templates**: Expanded the **Jinja2** template engine with a master `layout.html` to maintain a consistent UI across all pages.
+
+## 📂 Updated Project Structure
+```text
+flaskblog/
+├── static/
+│   └── main.css           # Custom styling for the blog
+├── templates/
+│   ├── layout.html        # Main template with Navbar
+│   ├── home.html          # Blog feed display
+│   ├── about.html         # Project information
+│   ├── login.html         # User sign-in page
+│   └── register.html      # User sign-up page
+├── __init__.py            # App initialization & config
+├── forms.py               # WTF forms for auth
+├── models.py              # Database schema (User/Post)
+└── routes.py              # URL routing & view logic
