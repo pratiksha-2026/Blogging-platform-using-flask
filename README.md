@@ -50,7 +50,7 @@ This repository contains the progress for **Week 1** of the Python Web Developme
 ├── app.py
 └── README.md
 
-# 📝 Blogging Platform - Week 2: User Authentication & Database
+# 📝Blogging Platform - Week 2: User Authentication & Database
 
 ## 📌 Project Overview
 This week focused on transitioning the static Flask application into a dynamic platform with a secure database backend and user session management.
