@@ -4,16 +4,20 @@ from flaskblog.forms import RegistrationForm, LoginForm, PostForm
 from flaskblog.models import User, Post, Tag
 from flask_login import login_user, current_user, logout_user, login_required
 
+# --- HOME ROUTE (With Pagination) ---
 @app.route("/")
 @app.route("/home")
 def home():
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('home.html', posts=posts)
 
+# --- ABOUT ROUTE ---
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
 
+# --- AUTHENTICATION ROUTES ---
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -53,6 +57,7 @@ def logout():
 def account():
     return render_template('account.html', title='Account')
 
+# --- POST CRUD ROUTES ---
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
