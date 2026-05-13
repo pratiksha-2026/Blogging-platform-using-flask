@@ -18,7 +18,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    # Relationships
     posts = db.relationship('Post', backref='author', lazy=True)
+    comments = db.relationship('Comment', backref='author', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -36,7 +38,20 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # Relationships
     tags = db.relationship('Tag', secondary=post_tags, backref=db.backref('posts', lazy='dynamic'))
+    comments = db.relationship('Comment', backref='post', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    # Foreign Keys linking to User and Post
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Comment('{self.content[:20]}...', '{self.date_posted}')"

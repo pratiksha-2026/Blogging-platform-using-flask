@@ -1,7 +1,9 @@
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt
-from flaskblog.forms import RegistrationForm, LoginForm, PostForm
-from flaskblog.models import User, Post, Tag
+# ADDED: CommentForm to the imports
+from flaskblog.forms import RegistrationForm, LoginForm, PostForm, CommentForm
+# ADDED: Comment to the imports
+from flaskblog.models import User, Post, Tag, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 
 # --- HOME ROUTE (With Pagination) ---
@@ -77,10 +79,25 @@ def new_post():
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form, legend='New Post')
 
-@app.route("/post/<int:post_id>")
+# --- INDIVIDUAL POST & COMMENTING SYSTEM ---
+@app.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+    form = CommentForm() # This defines the 'form' variable for the template
+    
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            comment = Comment(content=form.content.data, author=current_user, post=post)
+            db.session.add(comment)
+            db.session.commit()
+            flash('Your comment has been added!', 'success')
+            # Redirect to the same page to clear the form
+            return redirect(url_for('post', post_id=post.id))
+        else:
+            flash('Please log in to post a comment.', 'danger')
+            return redirect(url_for('login'))
+            
+    return render_template('post.html', title=post.title, post=post, form=form)
 
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
