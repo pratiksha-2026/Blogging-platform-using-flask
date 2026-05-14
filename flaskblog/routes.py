@@ -136,3 +136,23 @@ def delete_post(post_id):
     db.session.commit()
     flash('Post deleted!', 'success')
     return redirect(url_for('home'))
+
+@app.route("/search")
+def search():
+    query = request.args.get('q') # Get the text from the 'q' input field
+    if query:
+        # Use .filter() with .contains() to search title OR content
+        posts = Post.query.filter(
+            Post.title.contains(query) | Post.content.contains(query)
+        ).all()
+    else:
+        posts = []
+    
+    return render_template('search_results.html', title='Search Results', posts=posts, query=query)
+
+@app.route("/tag/<string:tag_name>")
+def tag_posts(tag_name):
+    tag = Tag.query.filter_by(name=tag_name).first_or_404()
+    # FIXED: Added .all() to convert the AppenderQuery into a list of posts
+    posts = tag.posts.all() 
+    return render_template('search_results.html', title=tag.name, posts=posts, query=f"Tag: {tag_name}")

@@ -36,3 +36,9 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
     content = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Add Comment')
+    
+class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    tags = StringField('Tags (Comma separated)') # Add this line!
+    submit = SubmitField('Post')

@@ -6,6 +6,7 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">{{ legend }}</legend>
             
+            <!-- Title Field -->
             <div class="form-group">
                 {{ form.title.label(class="form-control-label") }}
                 {% if form.title.errors %}
@@ -20,6 +21,7 @@
                 {% endif %}
             </div>
 
+            <!-- Content Field -->
             <div class="form-group">
                 {{ form.content.label(class="form-control-label") }}
                 {% if form.content.errors %}
@@ -33,6 +35,22 @@
                     {{ form.content(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+
+            <!-- NEW: Tags Field Added Here -->
+            <div class="form-group">
+                {{ form.tags.label(class="form-control-label") }}
+                {% if form.tags.errors %}
+                    {{ form.tags(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.tags.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.tags(class="form-control form-control-lg", placeholder="e.g. Python, Tutorial, News") }}
+                {% endif %}
+            </div>
+
         </fieldset>
         
         <div class="form-group mt-3">
@@ -40,6 +58,7 @@
         </div>
     </form>
 </div>
+
 <!-- Rich Text Editor Script -->
 <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <script>
