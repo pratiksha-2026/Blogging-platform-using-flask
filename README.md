@@ -119,4 +119,30 @@ In the sixth week of the internship, I focused on improving content discoverabil
 - **Flask-WTF:** Expanded the `PostForm` to include a dedicated `tags` field with validation.
 - **Jinja2 Logic:** Enhanced templates to dynamically render search results and handle empty query states gracefully.
 
+# 🧪 Week 7: Testing & Deployment Preparation
 
+This week focused on transitioning the application from a local development environment to a production-ready state. The primary goals were ensuring code reliability through automated testing and configuring the app for cloud hosting.
+
+## 🛠️ Key Features & Technical Tasks
+
+### 1. Automated Unit Testing
+- **Framework:** Utilized Python's built-in `unittest` library to create a robust testing suite.
+- **Test Isolation:** Configured an in-memory SQLite database (`sqlite://`) for tests. This ensures that the testing process does not modify the actual production or development data.
+- **Coverage:** Implemented tests for core functionalities, including:
+  - **User Registration:** Validating that new users are correctly hashed and stored.
+  - **Authentication Logic:** Ensuring the login system correctly handles valid/invalid credentials and session management.
+
+### 2. Production Environment Configuration
+- **WSGI Servers:** 
+  - Integrated **Gunicorn** as the primary web server for Linux-based production environments.
+  - Configured **Waitress** for local production-grade testing on Windows to bypass `fcntl` compatibility issues.
+- **Environment Variables:** Prepared the application to use dynamic port binding via `os.environ.get("PORT")`, allowing it to run on cloud platforms like Railway or Render.
+
+### 3. Dependency Management
+- **Requirements File:** Generated a standardized `requirements.txt` using `pip freeze` to ensure all dependencies (Flask, SQLAlchemy, Bcrypt, etc.) are version-locked for deployment.
+- **Procfile:** Created a `Procfile` to define the process type and the command for starting the web server in the cloud.
+
+## 🚀 How to Run Tests
+To run the automated test suite locally, use the following command:
+```bash
+python tests.py
