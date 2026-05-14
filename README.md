@@ -82,3 +82,41 @@ The final phase focused on the frontend architecture and optimizing the user exp
 1. Activate environment: `.\.venv\Scripts\activate`
 2. Run app: `python app.py`
 3. Visit: `http://127.0.0.1:5000`
+
+# 🚀 Week 5: Commenting System Implementation
+
+## **Project Overview**
+This week focused on transitioning the blogging platform into a social space by allowing users to interact with posts. This involved complex database relationships and multi-method routing.
+
+## **Key Features Added**
+*   **Relational Database Models**: Linked `User`, `Post`, and `Comment` tables using SQL Foreign Keys.
+*   **Dynamic Comment Rendering**: Comments are now fetched and displayed automatically under each specific post.
+*   **Submission Handling**: Users can post comments via a secure, CSRF-protected form.
+*   **Permission Logic**: Implemented conditional rendering to show the comment box only to logged-in users.
+
+## **Technical Challenges Overcome**
+### **Database Schema Synchronization**
+Faced `OperationalError` due to schema mismatches. Resolved this by recreating the database environment and ensured that the `post` route correctly initializes the `CommentForm` to prevent `UndefinedError`.
+
+### **Route Optimization**
+Updated the `/post/<post_id>` route to support both `GET` (viewing) and `POST` (submitting) methods, ensuring a seamless user flow through post-submission redirection.
+
+---
+*Developed as part of the Flask Blog Project - Week 5*
+
+# 🌟 Week 6: Advanced Content Management & Search
+
+In the sixth week of the internship, I focused on improving content discoverability and organization by implementing a tagging system and a robust search engine.
+
+## 🛠️ Key Features Added
+- **Tagging System:** Added the ability for authors to categorize their posts using multiple tags (e.g., Python, Tutorial, News).
+- **Global Search:** Implemented a search bar in the navigation header that queries the database for matches in both post titles and body content.
+- **Tag Filtering:** Created dedicated tag pages that display all posts associated with a specific keyword.
+- **Interactive Sidebar:** Updated the UI sidebar to provide quick links to trending tags and the latest posts.
+
+## 🔧 Technical Details
+- **SQLAlchemy Relationships:** Utilized a helper table to manage the many-to-many relationship between the `Post` and `Tag` models.
+- **Flask-WTF:** Expanded the `PostForm` to include a dedicated `tags` field with validation.
+- **Jinja2 Logic:** Enhanced templates to dynamically render search results and handle empty query states gracefully.
+
+
