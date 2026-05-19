@@ -146,3 +146,10 @@ This week focused on transitioning the application from a local development envi
 To run the automated test suite locally, use the following command:
 ```bash
 python tests.py
+
+## 🌐 Live Demo
+The application is successfully deployed and live on Render! You can view and interact with the fully functional platform here:
+
+👉 **[Live Demo: Blogging Platform](https://blogging-platform-using-flask.onrender.com)**
+
+---
